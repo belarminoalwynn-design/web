@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EatSync</title>
+
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: #fffaf0;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background-color: #427919;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 50px;
+      z-index: 1000;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    header h1 {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    header h1 span {
+      font-size: 1.5rem;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 2px;
+      background-color: white;
+      transition: width 0.3s;
+    }
+
+    nav a:hover {
+      color: #ffeab8;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+     .logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px; /* optional */
+  transition: transform 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+}
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* removes underline */
+  color: white; /* ensures the ScanMate text stays white */
+  gap: 10px;
+}
+
+.logo-link:hover {
+  color: #ffeab8; /* optional hover color */
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  transition: transform 0.3s;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+
+    section {
+      padding: 100px 50px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+
+  #company {
+  background: linear-gradient(120deg, #dffdb9, #abe98d);
+  padding: 6rem 4rem;
+  display: flex;
+  justify-content: flex-start; /* push content to the left */
+  align-items: center;
+  text-align: left;
+}
+
+.company-content {
+  max-width: 700px;
+  color: #333;
+}
+
+#company h2 {
+  font-size: 2.5rem;
+  color: #288603;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+#company p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.contact-btn {
+  background-color: #199b19;
+  color: #fff;
+  border: none;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.contact-btn:hover {
+  background-color: #07350a;
+  transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  #company {
+    padding: 4rem 2rem;
+    justify-content: center; /* center on smaller screens */
+    text-align: center;
+  }
+
+  .company-content {
+    max-width: 95%;
+  }
+
+  #company h2 {
+    font-size: 2rem;
+  }
+}
+
+/* --- SLIDE-IN ANIMATION --- */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-80px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply animation only to text and button */
+.company-content {
+  animation: slideInLeft 1.2s ease-out forwards;
+  opacity: 0; /* starts hidden */
+  animation-delay: 0.2s;
+}
+
+#team {
+  background: linear-gradient(120deg, #c7fcbd, #f7f6b8 , #f5abab);
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+#team h2 {
+  font-size: 2.4rem;
+  color: #1e8d1b;
+  font-weight: 800;
+  margin-bottom: 60px;
+}
+
+/* GRID - Pyramid Layout */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  justify-items: center;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* CEO - Top Center */
+.team-card.ceo {
+  grid-column: 2 / span 2;
+  grid-row: 1;
+  justify-self: center;
+  margin-bottom: 60px;
+}
+
+/* Other Members - Bottom Row */
+.team-card:not(.ceo) {
+  grid-row: 2;
+}
+
+/* Card Styling */
+.team-card {
+  background-color: #1e8d1b;
+  color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 240px;
+  min-height: 420px;
+  box-shadow: 0 8px 20px rgba(99, 241, 111, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  /* Animation defaults */
+  opacity: 0;
+  transform: translateY(60px);
+  animation: slideUp 1s ease-out forwards;
+}
+
+/* --- Hover effect restored --- */
+.team-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(75, 233, 101, 0.2);
+}
+
+/* Image */
+.team-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background: #b1f8bd;
+}
+
+/* Text */
+.team-card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+  color: #161515;
+  text-transform: uppercase;
+}
+
+.team-card h3 span {
+  display: block;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.team-card p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #020202;
+  padding: 0 1rem 1.5rem;
+  flex-grow: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .team-card.ceo {
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 40px;
+  }
+
+  .team-card:not(.ceo) {
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- SLIDE-IN ANIMATION --- */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animation to CEO and team with delay */
+.team-card.ceo {
+  animation-delay: 0.3s;
+}
+
+.team-card:nth-child(2) {
+  animation-delay: 0.4s;
+}
+
+.team-card:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.team-card:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.team-card:nth-child(5) {
+  animation-delay: 0.7s;
+}
+
+
+
+
+       footer {
+      background-color: #427919; 
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      flex-wrap: wrap;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .footer-left img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .footer-brand {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .footer-center {
+      text-align: center;
+      flex: 1;
+      font-size: 0.95rem;
+    }
+
+    .footer-center img {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      margin-right: 6px;
+      border-radius: 50%;
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .footer-right a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      gap: 8px;
+      font-size: 0.95rem;
+      transition: transform 0.3s ease;
+    }
+
+    .footer-right a:hover {
+      transform: translateX(5px);
+    }
+
+    .footer-right img {
+      width: 22px;
+      height: 22px;
+    }
+
+    @media (max-width: 700px) {
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-right {
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .services-container {
+        flex-direction: column;
+      }
+
+      .video-frame iframe {
+        height: 250px;
+      }
+
+      .float {
+        display: none;
+      }
+      
+    }
+  </style>
+
+  
+
+  
+
+  
+</head>
+<body>
+  <header>
+  <h1>
+    <a href="index.html" class="logo-link">
+      <img src="lgo.png" alt="ScanMate Logo" class="logo">
+    
+    <span></span>ScanMate
+    </a>
+  </h1>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="Aboutus.html">About us</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="download.html">Download</a></li>
+    </ul>
+  </nav>
+</header>
+
+ 
+   
+  <!-- SERVICES -->
+  
+  <section id="company">
+  <div class="company-content">
+    <h2>StarThink</h2>
+    <p>
+      is an innovative technology company dedicated to creating digital
+       solutions that inspire learning and positive lifestyle habits among students. 
+       We design engaging mobile and web applications that blend education, creativity, 
+      and fun to make learning more interactive and meaningful.
+    </p>
+    <button  class="contact-btn" onclick="window.location.href='#team'">Meet our Team</button>
+  </div>
+</section>
+
+
+<section id="team">
+  <h2>MEET OUR TEAM</h2>
+  
+  <div class="team-grid">
+    <!-- CEO (Top Center) -->
+    <div class="team-card ceo">
+      <img src="le.png" alt="John Paul Decoy">
+      <h3>Leonel Martinez<br><span>CEO</span></h3>
+      <p>Leads the team with a vision for innovation and strategic growth.</p>
+    </div>
+
+    <!-- 4 Members (Bottom Row) -->
+    <div class="team-card">
+      <img src="eth.png" alt="Angeline Arma">
+      <h3>Ethinyl Dear Ampo<br><span>COO</span></h3>
+      <p>Manages daily operations to ensure efficiency and productivity.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="cr.png" alt="John Carla Oteda">
+      <h3>Christine Ann Basul<br><span>CMO</span></h3>
+      <p>Drives marketing and brand awareness to connect with users.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="al.png" alt="Alcon James Palencia">
+      <h3>Alwynn Belarmino<br><span>CTO</span></h3>
+      <p>Manages tech development for a smooth user experience.</p>
+    </div>
+
+    <div class="team-card">
+      <img src="mic.png" alt="New Member">
+      <h3>Michael Navarro<br><span>UI/UX DESIGNER</span></h3>
+      <p>Designs intuitive and engaging interfaces that enhance usability.</p>
+    </div>
+  </div>
+</section>
+
+   
+
+
+  <!-- CONTACT -->
+  
+
+   <footer>
+    <div class="footer-left">
+      <img src="lgo.png" alt="EatSync Logo">
+      <span class="footer-brand">ScanMate</span>
+    </div>
+
+    <div class="footer-center">
+      <p>© 2025 ScanMate — Eat Smart, Play Happy! |
+        <img src="star.jpg" alt="StarThink Logo"> Powered by StarThink
+      </p>
+    </div>
+
+    <div class="footer-right">
+      <a href="#"><img src="facebook.png" alt="Facebook"> ScanMate</a>
+      <a href="mailto:hey@eatsync.com"><img src="gmail.png" alt="Email"> hey@scanmate.com</a>
+      <a href="tel:+1234567890"><img src="phone-call (1).png" alt="Phone"> +123-456-7890</a>
+    </div>
+  </footer>
+  <script>
+  const featureCards = document.querySelectorAll('.feature-card');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('slide-in');
+        }, index * 200); // ⏱ stagger delay (200ms per card)
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  featureCards.forEach(card => observer.observe(card));
+
+  
+</script>
+</body>
+</html>
